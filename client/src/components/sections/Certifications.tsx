@@ -85,8 +85,8 @@ export default function Certifications() {
                       <TrendingUp className="h-8 w-8" />
                     </div>
                     <div>
-                      <CardTitle className="text-2xl font-bold text-primary-foreground/90">{certifications[0].title}</CardTitle>
-                      <p className="text-muted-foreground">{certifications[0].issuer} • {certifications[0].date}</p>
+                      <CardTitle className="text-xl md:text-2xl font-bold text-primary-foreground/90 leading-tight">{certifications[0].title}</CardTitle>
+                      <p className="text-muted-foreground mt-1">{certifications[0].issuer} • {certifications[0].date}</p>
                     </div>
                   </div>
                   <Badge variant="secondary" className="w-fit bg-primary/10 text-primary border-primary/20">Featured</Badge>
