@@ -37,7 +37,7 @@ export default function Skills() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.3 }}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
@@ -52,7 +52,7 @@ export default function Skills() {
               key={skill.category}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.3 }}
               transition={{ delay: index * 0.1 }}
             >
               <Card className="bg-card/50 backdrop-blur-sm border-white/5 hover:border-primary/50 transition-all duration-300 h-full group overflow-hidden relative">

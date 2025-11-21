@@ -12,7 +12,7 @@ export default function Experience() {
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.3 }}
               className="mb-8 flex items-center gap-3"
             >
               <Briefcase className="h-6 w-6 text-primary" />
@@ -23,7 +23,7 @@ export default function Experience() {
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ delay: 0.2 }}
                 className="relative"
               >
@@ -48,7 +48,7 @@ export default function Experience() {
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.3 }}
               className="mb-8 flex items-center gap-3"
             >
               <GraduationCap className="h-6 w-6 text-accent" />
@@ -59,7 +59,7 @@ export default function Experience() {
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ delay: 0.2 }}
                 className="relative"
               >
@@ -72,7 +72,7 @@ export default function Experience() {
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ delay: 0.3 }}
                 className="relative"
               >
@@ -84,7 +84,7 @@ export default function Experience() {
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ delay: 0.4 }}
                 className="relative"
               >
@@ -98,7 +98,7 @@ export default function Experience() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.3 }}
               className="bg-gradient-to-r from-primary/10 to-accent/10 p-6 rounded-lg border border-white/10"
             >
               <div className="flex items-start gap-4">

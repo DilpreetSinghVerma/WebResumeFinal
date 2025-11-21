@@ -34,7 +34,7 @@ export default function Projects() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.3 }}
           className="mb-12 text-right"
         >
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
@@ -49,7 +49,7 @@ export default function Projects() {
               key={project.title}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.3 }}
               transition={{ delay: index * 0.2 }}
               className="group"
             >
