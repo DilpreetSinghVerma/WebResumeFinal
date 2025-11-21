@@ -1,20 +1,20 @@
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Points, PointMaterial } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Points, PointMaterial, Float } from "@react-three/drei";
+import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 
 function Stars(props: any) {
   const ref = useRef<THREE.Points>(null);
   
-  // Generate random points in a sphere manually to avoid 'maath' dependency issues
   const sphere = useMemo(() => {
-    const temp = new Float32Array(5000 * 3);
-    for (let i = 0; i < 5000; i++) {
+    const temp = new Float32Array(6000 * 3);
+    for (let i = 0; i < 6000; i++) {
       const u = Math.random();
       const v = Math.random();
       const theta = 2 * Math.PI * u;
       const phi = Math.acos(2 * v - 1);
-      const r = 1.5 * Math.cbrt(Math.random()); // Cubic root for uniform distribution
+      const r = 1.2 * Math.cbrt(Math.random()) + 0.5; // Hollower center
       
       const x = r * Math.sin(phi) * Math.cos(theta);
       const y = r * Math.sin(phi) * Math.sin(theta);
@@ -31,11 +31,15 @@ function Stars(props: any) {
     if (ref.current) {
       const time = state.clock.getElapsedTime();
       const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+      const maxScroll = typeof window !== 'undefined' ? document.body.scrollHeight - window.innerHeight : 1000;
+      const scrollProgress = scrollY / maxScroll;
 
-      // Combine continuous time-based rotation with scroll-based rotation
-      // Original speed was delta/10 (~0.1/s) and delta/15 (~0.06/s)
-      ref.current.rotation.x = -(time * 0.1) - (scrollY * 0.001);
-      ref.current.rotation.y = -(time * 0.075) - (scrollY * 0.001);
+      // Dynamic rotation based on scroll
+      ref.current.rotation.x = -(time * 0.05) - (scrollY * 0.0005);
+      ref.current.rotation.y = -(time * 0.03) - (scrollY * 0.0005);
+      
+      // Slight zoom effect on scroll
+      ref.current.scale.setScalar(1 + scrollProgress * 0.2);
     }
   });
 
@@ -44,21 +48,63 @@ function Stars(props: any) {
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
         <PointMaterial
           transparent
-          color="#00e5ff" // Cyan neon
-          size={0.002}
+          color="#00e5ff"
+          size={0.003}
           sizeAttenuation={true}
           depthWrite={false}
+          blending={THREE.AdditiveBlending}
         />
       </Points>
     </group>
   );
 }
 
+function FloatingFlare({ color, position, scale, speed }: { color: string, position: [number, number, number], scale: number, speed: number }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  
+  useFrame((state) => {
+    if (meshRef.current) {
+      const time = state.clock.getElapsedTime();
+      const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+      
+      // Move flares based on scroll to create parallax
+      meshRef.current.position.y = position[1] + Math.sin(time * speed) * 0.2 + (scrollY * 0.001);
+      meshRef.current.rotation.z = time * 0.1;
+    }
+  });
+
+  return (
+    <Float speed={speed} rotationIntensity={0.5} floatIntensity={1}>
+      <mesh ref={meshRef} position={position}>
+        <sphereGeometry args={[scale, 32, 32]} />
+        <meshBasicMaterial color={color} transparent opacity={0.15} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+    </Float>
+  );
+}
+
 export default function Scene() {
   return (
-    <div className="absolute inset-0 -z-10 h-full w-full bg-black">
-      <Canvas camera={{ position: [0, 0, 1] }}>
+    <div className="fixed inset-0 -z-10 h-full w-full bg-black pointer-events-none">
+      <Canvas camera={{ position: [0, 0, 2.5], fov: 60 }} gl={{ antialias: false }}>
+        <color attach="background" args={['#050505']} />
+        
         <Stars />
+        
+        {/* Floating "Lens Flares" / Orbs */}
+        <FloatingFlare color="#00e5ff" position={[-1.2, 0.5, 0]} scale={0.3} speed={1.5} />
+        <FloatingFlare color="#7c3aed" position={[1.5, -0.8, 0.5]} scale={0.4} speed={1.2} />
+        <FloatingFlare color="#ec4899" position={[0, 1.2, -0.5]} scale={0.2} speed={2} />
+
+        <EffectComposer disableNormalPass>
+          <Bloom 
+            luminanceThreshold={0} 
+            mipmapBlur 
+            intensity={1.5} 
+            radius={0.6}
+          />
+          <Vignette eskil={false} offset={0.1} darkness={1.1} />
+        </EffectComposer>
       </Canvas>
     </div>
   );
