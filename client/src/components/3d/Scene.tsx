@@ -88,7 +88,7 @@ function FloatingFlare({ color, position, scale, speed }: { color: string, posit
     <Float speed={speed} rotationIntensity={0.5} floatIntensity={1}>
       <mesh ref={meshRef} position={position}>
         <sphereGeometry args={[scale, 32, 32]} />
-        <meshBasicMaterial color={color} transparent opacity={0.05} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color={color} transparent opacity={0.08} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
     </Float>
   );
@@ -106,16 +106,15 @@ export default function Scene() {
         {/* Floating "Lens Flares" / Orbs */}
         <FloatingFlare color="#00e5ff" position={[-1.2, 0.5, 0]} scale={0.3} speed={1.5} />
         <FloatingFlare color="#7c3aed" position={[1.5, -0.8, 0.5]} scale={0.4} speed={1.2} />
-        <FloatingFlare color="#ec4899" position={[0, 1.2, -0.5]} scale={0.2} speed={2} />
 
         <EffectComposer disableNormalPass>
           <Bloom 
             luminanceThreshold={0} 
             mipmapBlur 
-            intensity={0.8} 
-            radius={0.5}
+            intensity={2.0} 
+            radius={0.6}
           />
-          <Vignette eskil={false} offset={0.1} darkness={1.1} />
+          <Vignette eskil={false} offset={0.1} darkness={1.3} />
         </EffectComposer>
       </Canvas>
     </div>
