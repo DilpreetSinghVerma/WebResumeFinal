@@ -1,3 +1,4 @@
+
 import fs from "node:fs";
 import { type Server } from "node:http";
 import path from "node:path";
@@ -7,7 +8,9 @@ import express, { type Express, type Request } from "express";
 import runApp from "./app";
 
 export async function serveStatic(app: Express, server: Server) {
-  const distPath = path.resolve(import.meta.dirname, "public");
+  // In Vercel's environment, process.cwd() is the root of the project.
+  // This robustly constructs the path to the 'public' directory.
+  const distPath = path.join(process.cwd(), "dist", "public");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
