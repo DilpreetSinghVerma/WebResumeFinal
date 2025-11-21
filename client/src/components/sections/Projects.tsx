@@ -53,11 +53,11 @@ export default function Projects() {
               transition={{ delay: index * 0.2 }}
               className="group"
             >
-              <Card className="h-full bg-card/50 border-white/5 overflow-hidden relative hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2">
+              <Card className="h-full bg-black/20 backdrop-blur-md border-white/5 overflow-hidden relative hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2">
                 <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 
                 <CardHeader className="relative z-10">
-                  <div className="mb-4 w-12 h-12 rounded-lg bg-background/50 backdrop-blur flex items-center justify-center border border-white/10">
+                  <div className="mb-4 w-12 h-12 rounded-lg bg-white/5 backdrop-blur flex items-center justify-center border border-white/10">
                     <project.icon className="h-6 w-6 text-foreground" />
                   </div>
                   <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
@@ -71,7 +71,7 @@ export default function Projects() {
                   </p>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {project.tech.map((t) => (
-                      <Badge key={t} variant="outline" className="bg-background/50 backdrop-blur border-white/10">
+                      <Badge key={t} variant="outline" className="bg-white/5 backdrop-blur border-white/10">
                         {t}
                       </Badge>
                     ))}

@@ -6,6 +6,7 @@ import * as THREE from "three";
 
 function Stars(props: any) {
   const ref = useRef<THREE.Points>(null);
+  const { mouse } = useThree(); // Access mouse from R3F
   
   const sphere = useMemo(() => {
     const temp = new Float32Array(6000 * 3);
@@ -34,9 +35,13 @@ function Stars(props: any) {
       const maxScroll = typeof window !== 'undefined' ? document.body.scrollHeight - window.innerHeight : 1000;
       const scrollProgress = scrollY / maxScroll;
 
-      // Dynamic rotation based on scroll
-      ref.current.rotation.x = -(time * 0.05) - (scrollY * 0.0005);
-      ref.current.rotation.y = -(time * 0.03) - (scrollY * 0.0005);
+      // Dynamic rotation based on scroll AND mouse
+      // Mouse influence is subtle but adds "feel"
+      const mouseX = mouse.x * 0.2;
+      const mouseY = mouse.y * 0.2;
+
+      ref.current.rotation.x = -(time * 0.05) - (scrollY * 0.0005) + mouseY;
+      ref.current.rotation.y = -(time * 0.03) - (scrollY * 0.0005) + mouseX;
       
       // Slight zoom effect on scroll
       ref.current.scale.setScalar(1 + scrollProgress * 0.2);
@@ -61,14 +66,19 @@ function Stars(props: any) {
 
 function FloatingFlare({ color, position, scale, speed }: { color: string, position: [number, number, number], scale: number, speed: number }) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const { mouse } = useThree();
   
   useFrame((state) => {
     if (meshRef.current) {
       const time = state.clock.getElapsedTime();
       const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
       
-      // Move flares based on scroll to create parallax
-      meshRef.current.position.y = position[1] + Math.sin(time * speed) * 0.2 + (scrollY * 0.001);
+      // Move flares based on scroll AND mouse parallax
+      const parallaxX = mouse.x * 0.5;
+      const parallaxY = mouse.y * 0.5;
+
+      meshRef.current.position.x = position[0] + Math.cos(time * speed * 0.5) * 0.1 + parallaxX;
+      meshRef.current.position.y = position[1] + Math.sin(time * speed) * 0.2 + (scrollY * 0.001) + parallaxY;
       meshRef.current.rotation.z = time * 0.1;
     }
   });
@@ -87,7 +97,8 @@ export default function Scene() {
   return (
     <div className="fixed inset-0 -z-10 h-full w-full bg-black pointer-events-none">
       <Canvas camera={{ position: [0, 0, 2.5], fov: 60 }} gl={{ antialias: false }}>
-        <color attach="background" args={['#050505']} />
+        {/* Darker background, but not pitch black, allowing for depth */}
+        <color attach="background" args={['#020204']} /> 
         
         <Stars />
         

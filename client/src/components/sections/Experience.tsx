@@ -28,7 +28,7 @@ export default function Experience() {
                 className="relative"
               >
                 <div className="absolute -left-[37px] top-1 h-4 w-4 rounded-full bg-primary border-4 border-background" />
-                <div className="bg-card/50 p-6 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
+                <div className="bg-black/20 backdrop-blur-md p-6 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
                   <span className="text-sm text-primary font-mono mb-2 block">01/2018 - 07/2025</span>
                   <h3 className="text-xl font-bold">Technical Support & Assistance</h3>
                   <p className="text-muted-foreground mb-2">Photography and Videography Studio • Ludhiana</p>

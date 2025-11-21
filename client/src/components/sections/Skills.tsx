@@ -55,7 +55,7 @@ export default function Skills() {
               viewport={{ once: false, amount: 0.3 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="bg-card/50 backdrop-blur-sm border-white/5 hover:border-primary/50 transition-all duration-300 h-full group overflow-hidden relative">
+              <Card className="bg-black/20 backdrop-blur-md border-white/5 hover:border-primary/50 transition-all duration-300 h-full group overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <CardContent className="p-6 relative z-10">
