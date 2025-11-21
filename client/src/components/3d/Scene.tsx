@@ -27,10 +27,15 @@ function Stars(props: any) {
     return temp;
   }, []);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (ref.current) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
+      const time = state.clock.getElapsedTime();
+      const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+
+      // Combine continuous time-based rotation with scroll-based rotation
+      // Original speed was delta/10 (~0.1/s) and delta/15 (~0.06/s)
+      ref.current.rotation.x = -(time * 0.1) - (scrollY * 0.001);
+      ref.current.rotation.y = -(time * 0.075) - (scrollY * 0.001);
     }
   });
 
