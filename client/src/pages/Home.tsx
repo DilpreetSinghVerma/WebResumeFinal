@@ -5,7 +5,7 @@ import Projects from "@/components/sections/Projects";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+    <main className="min-h-screen selection:bg-primary selection:text-primary-foreground">
       <Hero />
       <Skills />
       <Experience />

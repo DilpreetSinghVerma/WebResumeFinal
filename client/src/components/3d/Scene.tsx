@@ -95,9 +95,9 @@ function FloatingFlare({ color, position, scale, speed }: { color: string, posit
 
 export default function Scene() {
   return (
-    <div className="fixed inset-0 -z-10 h-full w-full bg-black pointer-events-none">
+    <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
       <Canvas camera={{ position: [0, 0, 2.5], fov: 60 }} gl={{ antialias: false }}>
-        {/* Darker background, but not pitch black, allowing for depth */}
+        {/* Transparent background to let body gradients show through if needed, or deep space color */}
         <color attach="background" args={['#020204']} /> 
         
         <Stars />
